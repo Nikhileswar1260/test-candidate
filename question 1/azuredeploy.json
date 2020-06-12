@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "locations": {
+      "type": "array",
+      "defaultValue": [
+          "eastus", 
+          "westus"
+        ],
+      "metadata": {
+        "description": "default locations"
+      }
+    }
+  },
+  "resources": [
+    {
+        "type": "Microsoft.Resources/resourceGroups",
+        "apiVersion": "2019-10-01",
+        "name": "[concat(my-test-candidate, '-', parameters('locations'), copyIndex())]",
+        "location": "[parameters('locations')]",
+        "copy": {
+            "name": "rglocation",
+            "count": "[length(parameters('locations'))]"
+          },
+        "properties": {}
+      }
+  ],
+  "outputs": {}
+}
